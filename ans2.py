@@ -31,17 +31,17 @@ score = 0 # Initial variables
 lives = 3
 level = 1
 running = True
-boss_tank_spawned = False  # Track if the boss has been spawned in Level 3
+boss_tank_spawned = False  # Track the boss has been spawned in Level 3
 
 # Tank, projectile, enemy tank
 
-player_image = pygame.Surface((50, 30))  # Tank
+player_image = pygame.Surface((50, 30))  # Tank, initial fill, later image was put
 player_image.fill((0, 255, 0))
 
 projectile_image = pygame.Surface((10, 5)) # Canon projectiles
 projectile_image.fill((255, 0, 0))
 
-enemy_image = pygame.Surface((50, 30))  # Enemy tank
+enemy_image = pygame.Surface((50, 30))  # Enemy tank, initial fill, later image was put
 enemy_image.fill((255, 0, 0))
 
 # Set the font for text
@@ -50,7 +50,7 @@ font = pygame.font.SysFont('Arial', 24)
 
 #  Health bar function
 max_health = 100
-current_health = 100
+current_health = 100 # Initial
 
 def draw_health_bar(screen, x, y, current_health, max_health):
 
@@ -58,7 +58,7 @@ def draw_health_bar(screen, x, y, current_health, max_health):
     bar_height = 20  # The height of the health bar
     health_ratio = current_health / max_health
 
-    # Colors
+    # Colors of Health bar
     health_color = (255, 0, 0)  # Red for health bar
     background_color = (100, 100, 100)  # Grey for background
 
@@ -108,7 +108,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface((50, 50))
         self.image.fill((0, 128, 255))
-        self.image = pygame.image.load('plyr.jpg').convert_alpha()
+        self.image = pygame.image.load('plyr.jpg').convert_alpha() # Load blue tank image
         self.rect = self.image.get_rect()
         self.rect.x = 100
         self.rect.y = SCREEN_HEIGHT - 100
@@ -163,7 +163,7 @@ class Player(pygame.sprite.Sprite):
                 if self.lives > 0:
                     self.health = 100  # Restore health if player still has lives
             self.invincible = True  # Activate invincibility frames
-            self.invincible_timer = 60  # Invincible for 60 frames (1 second if running at 60 FPS)
+            self.invincible_timer = 60  # Invincible for 60 frames (1 second if running at 60 FPS) at new life
     
 
 ### Create enemy class ###
@@ -174,7 +174,7 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface((40, 40))  # Create a surface for the enemy
         self.image.fill((255, 0, 0))  # Fill the enemy surface with red color (RGB)
-        self.image = pygame.image.load('enemy.jpg').convert_alpha()
+        self.image = pygame.image.load('enemy.jpg').convert_alpha() # Load red tank image
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -212,8 +212,8 @@ class BossTank(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface((100, 60))  # Large size for the boss tank
-        self.image.fill((128, 0, 0))  # Dark red color for the boss
-        self.image = pygame.image.load('bosstank.jpg').convert_alpha()
+        self.image.fill((128, 0, 0))  # Dark red initial fill color for the boss
+        self.image = pygame.image.load('bosstank.jpg').convert_alpha() # Big boss tank image
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH - 150
         self.rect.y = SCREEN_HEIGHT // 2
@@ -333,7 +333,7 @@ def game_loop():
             # Speed up enemies and change their appearance in level 3
             for enemy in enemies:
                 enemy.speed = 5  # Speed up enemy
-                enemy.image = pygame.image.load('bomb.jpg').convert_alpha()
+                enemy.image = pygame.image.load('bomb.jpg').convert_alpha() # replace red tank image with missile
             hitbomb = font.render(f"Hit the bombs! Boss does not take damage!", True, (0, 0, 0))  # level 3 info
             screen.blit(hitbomb, (200, 30))  # Mid top
 
@@ -403,11 +403,11 @@ def game_loop():
 
 
         # Draw all sprites
-        player_group.draw(screen)
-        projectiles.draw(screen)
-        enemies.draw(screen)
-        collectibles.draw(screen)
-        boss_tank_group.draw(screen)
+        player_group.draw(screen) # Draw player
+        projectiles.draw(screen) # Draw projectile
+        enemies.draw(screen) # Draw lenemy
+        collectibles.draw(screen) # Draw loot
+        boss_tank_group.draw(screen)   # Draw boss 
         boss_projectiles.draw(screen)  # Draw boss projectiles
 
         # Display score and lives
@@ -452,3 +452,5 @@ game_loop()
 
 
 pygame.quit()
+
+# https://github.com/Shantanu-Barua/hit137_assignment3.git
