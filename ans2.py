@@ -184,6 +184,11 @@ class Player(pygame.sprite.Sprite):
         elif self.rect.x > SCREEN_WIDTH - self.rect.width:
             self.rect.x = SCREEN_WIDTH - self.rect.width
 
+        if self.rect.y < 0:
+            self.rect.y = 0
+        elif self.rect.y > SCREEN_HEIGHT - self.rect.width:
+            self.rect.y = SCREEN_HEIGHT - self.rect.width
+
     def jump(self):
         if self.is_jumping:
             self.rect.y -= self.jump_speed
