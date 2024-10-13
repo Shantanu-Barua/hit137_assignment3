@@ -2,6 +2,8 @@
 
 import pygame
 import random
+import sys
+import os
 
 # Initialize Pygame
 pygame.init()
@@ -28,7 +30,7 @@ clock = pygame.time.Clock()
 
 # Game Variables
 score = 0 # Initial variables
-lives = 3
+lives = 2
 level = 1
 running = True
 boss_tank_spawned = False  # Track the boss has been spawned in Level 3
@@ -72,17 +74,55 @@ def game_over_screen():
     screen.fill(color='red')
     text = font.render("GAME OVER", True, (255, 255, 255))
     screen.blit(text, (SCREEN_WIDTH//2 - 100, SCREEN_HEIGHT//2))
+
+    # Create Restart Button
+    restart_button = pygame.Rect(SCREEN_WIDTH // 2 - 50, SCREEN_HEIGHT // 2 + 50, 400, 50)  # Button dimensions
+    pygame.draw.rect(screen, (200, 0, 0), restart_button)  # Draw button 
+    button_text = font.render("Press Button R to  Restart", True, (255, 255, 255))  # Text on the button
+    screen.blit(button_text, (SCREEN_WIDTH // 2 - 40, SCREEN_HEIGHT // 2 + 60))  # Position text on the button
     pygame.display.flip()
-    pygame.time.wait(2000)  # To wait 2 seconds before closing
+    # pygame.time.wait(10000)  # To wait 10 seconds before closing
+
+    # Wait for user input to restart the game
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:  # If the player presses 'R', restart the game
+                    waiting = False
+                    reopen_application()
+                    
 
 def victory_screen():
     screen.fill(color='green')
     text = font.render("Game over!!! YOU WIN!", True, (255, 255, 255))
     screen.blit(text, (SCREEN_WIDTH//2 - 100, SCREEN_HEIGHT//2))
+    
+    # Create Restart Button
+    restart_button = pygame.Rect(SCREEN_WIDTH // 2 - 50, SCREEN_HEIGHT // 2 + 50, 400, 50)  # Button dimensions
+    pygame.draw.rect(screen, (0, 200, 0), restart_button)  # Draw button 
+    button_text = font.render("Press Button R to  Restart", True, (255, 255, 255))  # Text on the button
+    screen.blit(button_text, (SCREEN_WIDTH // 2 - 40, SCREEN_HEIGHT // 2 + 60))  # Position text on the button
     pygame.display.flip()
-    pygame.time.wait(2000)  # To wait 2 seconds before closing
+    # pygame.time.wait(10000)  # To wait 10 seconds before closing
 
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:  # If the player presses 'R', restart the game
+                    waiting = False
+                    reopen_application()
 
+def reopen_application():
+    
+    os.execl(sys.executable, sys.executable, 'ans2.py')
 
 ### Create projectile class ###
 
@@ -313,6 +353,7 @@ SPAWN_BOSS = pygame.USEREVENT
 
 def game_loop():
     global score, running, boss_tank_spawned, level # Declare global variables used in this function
+
     while running:
       
         screen.fill(WHITE)
@@ -449,7 +490,6 @@ def game_loop():
 
 # Start the game loop
 game_loop()
-
 
 pygame.quit()
 
